@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sống Sót Nơi Phòng Thí Nghiệm - Phiên Bản Hiệu Ứng Cao Sáng Sủa</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --bg: #f3f7fa; 
+  --s1: #ffffff;
+  --s2: #e6eef5;
+  --cyan: #008fa3; 
+  --cyan2: rgba(0, 143, 163, 0.08);
+  --green: #10b981;
+  --green-glow: rgba(16, 185, 129, 0.4);
+  --red: #ef4444;
+  --red-glow: rgba(239, 68, 68, 0.4);
+  --yellow: #b45309;
+  --text: #1e293b;
+  --muted: #64748b;
+  --border: rgba(0, 143, 163, 0.25);
+  --shadow: 0 10px 30px rgba(0,0,0,0.06);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+body {
+  font-family:'Be Vietnam Pro',sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  width: 100vw; height: 100vh;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+
+body::after {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:1;
+  background:
+    repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(0, 143, 163, 0.015) 60px),
+    repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(0, 143, 163, 0.015) 60px);
+}
+
+#lab-particles { position: fixed; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
+.lab-icon {
+  position: absolute; color: var(--cyan); font-size: 28px; opacity: 0;
+  animation: floatParticle 22s linear infinite;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+@keyframes floatParticle {
+  0% { transform: translateY(105vh) translateX(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.15; }
+  90% { opacity: 0.15; }
+  100% { transform: translateY(-10vh) translateX(50px) rotate(360deg); opacity: 0; }
+}
+
+#bgc{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+.cb{position:fixed;width:80px;height:80px;z-index:5;pointer-events:none;}
+.cb::before,.cb::after{content:'';position:absolute;background:var(--cyan);opacity:0.4;box-shadow: 0 0 4px var(--cyan);}
+.cb::before{width:3px;height:60%;}
+.cb::after{height:3px;width:60%;}
+.cb.tl{top:20px;left:20px;}.cb.tr{top:20px;right:20px;transform:scaleX(-1);}
+.cb.bl{bottom:20px;left:20px;transform:scaleY(-1);}.cb.br{bottom:20px;right:20px;transform:scale(-1);}
+
+.wrapper{position:relative;z-index:10;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;}
+
+.screen{
+  width:min(1450px,96vw); height:92vh; 
+  display: flex; flex-direction: column;
+}
+.hide{display:none!important;}
+
+/* ══════════════ START SCREEN ══════════════ */
+#start-screen{text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;height:85vh;}
+.start-hero{
+  width:100%; height:160px; display:flex; align-items:center; justify-content:center;
+  position:relative; margin-bottom:10px;
+}
+.start-title{
+  font-family:'Orbitron',monospace; font-size:clamp(32px,5vw,56px); font-weight:900; line-height:1.1;
+  background:linear-gradient(135deg,var(--cyan),#0284c7,var(--cyan)); background-size:200%;
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  animation:shine 4s linear infinite; margin-bottom:12px;
+}
+@keyframes shine{0%{background-position:0%}100%{background-position:200%}}
+.start-sub{ font-family:'Orbitron',monospace; font-size:16px; color:var(--yellow); letter-spacing:6px; text-transform:uppercase; margin-bottom:25px; font-weight: 700; }
+.start-brief{
+  max-width:850px; background:rgba(0, 143, 163, 0.05); border:2px solid var(--border); border-radius:14px;
+  padding:22px 32px; margin-bottom:25px; font-size:20px; line-height:1.6; color: var(--text); position:relative;
+  box-shadow: var(--shadow);
+}
+.start-brief::before{
+  content:'// NHIỆM VỤ ĐƯỢC GIAO'; position:absolute; top:-12px; left:30px; background:var(--bg); padding:0 12px;
+  font-family:'Orbitron',monospace; font-size:12px; color:var(--cyan); letter-spacing:2px; font-weight:bold;
+}
+.start-pills{display:flex; gap:20px; margin-bottom:35px; justify-content:center;}
+.pill{ background: var(--s1); border:1.5px solid rgba(0, 143, 163, 0.3); border-radius:10px; padding:12px 24px; display:flex; flex-direction:column; align-items:center; gap:4px; box-shadow: var(--shadow); }
+.pill .n{font-family:'Orbitron',monospace; font-size:28px; font-weight:900; color:var(--cyan);}
+.pill .l{font-size:11px; color:var(--muted); letter-spacing:2px; text-transform:uppercase;}
+.btn-start{
+  font-family:'Orbitron',monospace; font-size:22px; font-weight:900; letter-spacing:4px;
+  background:linear-gradient(135deg, rgba(0,143,163,0.1), rgba(0,168,107,0.1)); border:2.5px solid var(--cyan); color:var(--cyan);
+  padding:18px 60px; border-radius:6px; cursor:pointer; transition:all .3s; box-shadow:0 10px 30px rgba(0,143,163,0.15);
+}
+.btn-start:hover{box-shadow:0 15px 40px rgba(0,143,163,0.3); transform:translateY(-4px); color: #fff; background: var(--cyan);}
+
+/* ══════════════ GAME SCREEN ══════════════ */
+.hud{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 24px; background:var(--s2); border:2px solid var(--border); border-radius:12px 12px 0 0; border-bottom: none;
+}
+.badge-live{ font-family:'Orbitron',monospace; font-size:11px; font-weight:900; background:var(--red); color:#fff; padding:4px 10px; border-radius:4px; letter-spacing:2px; animation:blink-live 1.5s ease infinite; }
+@keyframes blink-live{0%,100%{opacity:1;}50%{opacity:0.4;}}
+.hud-title{font-family:'Orbitron',monospace; font-size:20px; color:var(--cyan); font-weight:900;}
+.dots-row{display:flex; gap:6px;}
+.d{width:12px; height:12px; border-radius:50%; background:rgba(0,0,0,0.1); border:1.5px solid rgba(0,0,0,0.2);}
+.d.done{background:var(--green); border-color:var(--green); box-shadow:0 0 8px var(--green);}
+.d.now{background:var(--yellow); border-color:var(--yellow); box-shadow:0 0 10px var(--yellow);}
+.d.wrong{background:var(--red); border-color:var(--red); box-shadow:0 0 8px var(--red);}
+.safe-wrap{display:flex; align-items:center; gap:10px;}
+.safe-lbl{font-family:'Orbitron',monospace; font-size:11px; color:var(--muted); font-weight:bold;}
+.safe-track{width:120px; height:10px; background:rgba(0,0,0,0.08); border-radius:6px; overflow:hidden;}
+.safe-fill{height:100%; border-radius:6px; background:linear-gradient(90deg,var(--green),#00c781); transition:width .7s ease;}
+.safe-pct{font-family:'Orbitron',monospace; font-size:18px; font-weight:900; color:var(--green); min-width:50px;}
+
+/* TWO-COLUMN LAYOUT */
+.main-grid {
+  display: grid; grid-template-columns: 1.1fr 0.9fr; 
+  flex: 1; background: var(--s1);
+  border-left: 2px solid var(--border); border-right: 2px solid var(--border);
+  overflow: hidden; min-height: 0;
+}
+
+/* KHỐI TRÁI */
+.grid-left {
+  padding: 24px; border-right: 1.5px solid rgba(0,143,163,0.15);
+  display: flex; flex-direction: column; justify-content: space-between; min-height: 0;
+}
+.scene-svg-wrap {
+  width:100%; flex: 1; min-height: 340px; border-radius:12px; overflow:hidden;
+  background: #f8fafc; border:2px solid var(--border); margin-bottom:18px;
+  position:relative; display:flex; align-items:center; justify-content:center;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.04);
+}
+.scene-svg-wrap svg{
+  width:95%; height:95%; max-height:360px; object-fit:contain;
+}
+.scene-number-badge{
+  position:absolute; top:12px; left:14px; font-family:'Orbitron',monospace; font-size:11px; color:var(--cyan); font-weight:bold;
+  background:rgba(0,143,163,0.1); border:1.5px solid rgba(0,143,163,0.3); padding:4px 14px; border-radius:20px; letter-spacing:2px; z-index:15;
+}
+.scene-shield {
+  position: absolute; inset: 0; background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+  z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transition: all 0.4s cubic-bezier(0.77, 0, 0.175, 1); pointer-events: none; opacity: 1; backdrop-filter: blur(4px);
+}
+.scene-shield.reveal { opacity: 0; transform: scale(1.03); visibility: hidden; }
+.shield-icon { font-size: 55px; margin-bottom: 8px; animation: pulseShield 2s infinite; }
+.shield-text { font-family: 'Orbitron', monospace; font-size: 13px; color: var(--muted); letter-spacing: 2px; font-weight: bold; }
+@keyframes pulseShield { 0%, 100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.03); } }
+
+.story {
+  border-left: 5px solid var(--cyan); background: rgba(0,143,163,0.04); border-radius: 0 10px 10px 0;
+  padding: 20px 24px; font-size: 22px; line-height: 1.5; color: var(--text); font-weight: 500;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+/* KHỐI PHẢI */
+.grid-right {
+  padding: 24px; display: flex; flex-direction: column; justify-content: space-between; min-height: 0;
+}
+.cw-lbl{font-family:'Orbitron',monospace; font-size:11px; color:var(--muted); letter-spacing:3px; margin-bottom:12px; font-weight:bold;}
+.cg{display:flex; flex-direction:column; gap:12px;}
+
+/* NÚT ĐÁP ÁN NÂNG CẤP HIỆU ỨNG RỰC RỠ */
+.bc {
+  background: #f8fafc; border: 2px solid rgba(0,0,0,0.08);
+  color: var(--text); padding: 18px 22px; border-radius: 12px; cursor: pointer; text-align: left;
+  font-size: 19px; line-height: 1.4; transition: all .2s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; gap: 15px; font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+.cl {
+  font-family:'Orbitron',monospace; font-size:14px; font-weight:900; color:var(--cyan);
+  background:rgba(0,143,163,0.08); border: 2px solid rgba(0,143,163,0.3); width:34px; height:34px; border-radius:6px;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0; transition: all 0.2s;
+}
+.bc:hover:not(:disabled){background:rgba(0,143,163,0.06); border-color:var(--cyan); transform:translateX(6px); box-shadow: 0 4px 15px rgba(0,143,163,0.1);}
+.bc:disabled{cursor:not-allowed;}
+
+/* HIỆU ỨNG ĐÚNG: Phát quang xanh lá cực mạnh, đổi màu chữ trắng sạch sẽ nổi bật */
+.bc.ok { 
+  background: var(--green) !important; 
+  border-color: #059669 !important; 
+  color: #ffffff !important;
+  box-shadow: 0 0 20px var(--green-glow) !important; 
+  transform: scale(1.02);
+  font-weight: 600;
+}
+.bc.ok .cl { background: #ffffff !important; color: var(--green) !important; border-color: #ffffff !important; }
+
+/* HIỆU ỨNG SAI: Lắc mạnh màn hình và đỏ phát quang rực lửa */
+.bc.ng { 
+  background: var(--red) !important; 
+  border-color: #b91c1c !important; 
+  color: #ffffff !important;
+  box-shadow: 0 0 20px var(--red-glow) !important; 
+  animation: shakeAction 0.4s ease-in-out;
+}
+.bc.ng .cl { background: #ffffff !important; color: var(--red) !important; border-color: #ffffff !important; }
+
+/* Ô GIẢI THÍCH */
+.feedback-box-area {
+  flex: 1; margin-top: 20px; display: flex; flex-direction: column; justify-content: flex-end; min-height: 140px;
+}
+.fb{
+  border-radius:12px; padding:20px 24px; line-height:1.5; font-size: 18px; font-weight: 500;
+  visibility: hidden; opacity: 0; transform: translateY(15px); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: var(--shadow);
+}
+.fb.show { visibility: visible; opacity: 1; transform: translateY(0); }
+.fb-ok{background:#ecfdf5; border:2px solid var(--green); border-left:8px solid var(--green); color:#065f46;}
+.fb-ng{background:#fef2f2; border:2px solid var(--red); border-left:8px solid var(--red); color:#991b1b;}
+.fb-head{font-family:'Orbitron',monospace; font-size:14px; font-weight:900; letter-spacing:2px; margin-bottom:6px; text-transform:uppercase;}
+
+/* FOOTER */
+.foot{
+  background:var(--s2); border:2px solid var(--border); border-top:1px solid rgba(0,143,163,0.15);
+  border-radius:0 0 12px 12px; padding:12px 24px; display:flex; justify-content:flex-end; align-items:center;
+}
+.btn-next{
+  font-family:'Orbitron',monospace; font-size:18px; font-weight:900; letter-spacing:2px;
+  background:linear-gradient(135deg,var(--cyan),#0284c7); border:none; color:#fff;
+  padding:12px 40px; border-radius:6px; cursor:pointer; transition:all .3s; box-shadow:0 4px 15px rgba(0,143,163,0.2);
+}
+.btn-next:hover{box-shadow:0 6px 25px rgba(0,143,163,0.4); transform:scale(1.05);}
+
+/* ══════════════ END SCREEN ══════════════ */
+#end-screen{text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; height: 85vh;}
+.end-icon{font-size:80px; animation:fl 3s ease-in-out infinite; filter:drop-shadow(0 4px 10px rgba(0,0,0,0.1)); margin-bottom:12px;}
+@keyframes fl{0%,100%{transform:translateY(0);} 50%{transform:translateY(-12px);}}
+.end-t{font-family:'Orbitron',monospace; font-size:36px; font-weight:900; letter-spacing:3px; margin-bottom:10px;}
+.end-sc{font-family:'Orbitron',monospace; font-size:100px; font-weight:900; line-height:1; margin-bottom:10px; color:var(--green); text-shadow:0 4px 15px rgba(16,185,129,0.1);}
+.end-sl{font-family:'Orbitron',monospace; font-size:14px; font-weight:bold; letter-spacing:3px; color:var(--muted); margin-bottom:20px;}
+.end-desc{ max-width:800px; line-height:1.6; color:var(--text); background:rgba(0,143,163,0.04); border:2px solid var(--border); border-radius:14px; padding:20px 32px; margin-bottom:28px; box-shadow:var(--shadow); }
+.btn-re{ font-family:'Orbitron',monospace; font-size:19px; font-weight:900; letter-spacing:3px; background: transparent; border:2.5px solid var(--cyan); color:var(--cyan); padding:16px 50px; border-radius:6px; cursor:pointer; transition:all .3s; }
+.btn-re:hover{box-shadow:0 6px 20px rgba(0,143,163,0.2); background:var(--cyan); color:#fff; transform:translateY(-3px);}
+
+/* FLASH HIỆU ỨNG CHỚP TOÀN VIỀN MÀN HÌNH MẠNH MẼ */
+.flash { position:fixed; inset:0; pointer-events:none; z-index:9999; opacity:0; transition: none; }
+.flash.g-wow { animation: flashWowGreen 0.5s ease-out; }
+.flash.r-wow { animation: flashWowRed 0.5s ease-out; }
+@keyframes flashWowGreen { 0% { box-shadow: inset 0 0 80px rgba(16,185,129,0.8); background: rgba(16,185,129,0.08); opacity:1; } 100% { box-shadow: inset 0 0 0px rgba(16,185,129,0); background: transparent; opacity:0; } }
+@keyframes flashWowRed { 0% { box-shadow: inset 0 0 80px rgba(239,68,68,0.8); background: rgba(239,68,68,0.08); opacity:1; } 100% { box-shadow: inset 0 0 0px rgba(239,68,68,0); background: transparent; opacity:0; } }
+
+/* LẮC MẠNH KHI SAI */
+.shake-wow { animation: shakeAction 0.4s ease-in-out; }
+@keyframes shakeAction { 0%, 100% { transform: translateX(0); } 15%, 45%, 75% { transform: translateX(-8px); } 30%, 60%, 90% { transform: translateX(8px); } }
+
+.cp{position:fixed; pointer-events:none; z-index:1000; animation:cf linear forwards;}
+@keyframes cf{0%{opacity:1; transform:translateY(-20px) rotate(0);} 100%{opacity:0; transform:translateY(100vh) rotate(720deg);}}
+</style>
+</head>
+<body>
+<canvas id="bgc"></canvas>
+<div id="lab-particles"></div>
+<div class="cb tl"></div><div class="cb tr"></div><div class="cb bl"></div><div class="cb br"></div>
+<div class="flash" id="fl"></div>
+
+<div class="wrapper" id="main-wrapper">
+
+<div class="screen" id="start-screen">
+  <div class="start-hero">
+    <svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;">
+      <defs>
+        <radialGradient id="hg" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#008fa3" stop-opacity=".12"/><stop offset="100%" stop-color="#008fa3" stop-opacity="0"/></radialGradient>
+      </defs>
+      <ellipse cx="400" cy="100" rx="320" ry="90" fill="url(#hg)"/>
+      <g opacity=".25">
+        <path d="M80,50 Q100,100 80,150" stroke="#008fa3" stroke-width="2.5" fill="none"/>
+        <path d="M100,50 Q80,100 100,150" stroke="#00a86b" stroke-width="2.5" fill="none"/>
+        <line x1="80" y1="70" x2="100" y2="80" stroke="#008fa3" stroke-width="1.5"/>
+        <line x1="80" y1="100" x2="100" y2="100" stroke="#008fa3" stroke-width="1.5"/>
+        <line x1="80" y1="130" x2="100" y2="120" stroke="#008fa3" stroke-width="1.5"/>
+        <path d="M690,50 Q710,100 690,150" stroke="#008fa3" stroke-width="2.5" fill="none"/>
+        <path d="M710,50 Q690,100 710,150" stroke="#00a86b" stroke-width="2.5" fill="none"/>
+      </g>
+    </svg>
+    <div style="position:relative;z-index:2;font-size:80px;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.15));">🧪</div>
+  </div>
+  <h1 class="start-title">SỐNG SÓT NƠI PHÒNG THÍ NGHIỆM</h1>
+  <div class="start-sub">An Toàn Sinh Học — Cấp Độ BSL-3</div>
+  <div class="start-brief">
+    Bạn bước vào ca làm việc đầu tiên tại Phòng thí nghiệm An toàn sinh học cấp cao. Mỗi quyết định sai lầm sẽ kéo chỉ số an toàn xuống và có thể dẫn đến thảm họa sinh học. Hãy suy nghĩ kỹ trước mỗi lựa chọn!
+  </div>
+  <div class="start-pills">
+    <div class="pill"><span class="n">10</span><span class="l">Tình huống</span></div>
+    <div class="pill"><span class="n" style="color:var(--green)">100%</span><span class="l">An toàn khởi đầu</span></div>
+    <div class="pill"><span class="n" style="color:var(--yellow)">BSL-3</span><span class="l">Mức nguy hiểm</span></div>
+  </div>
+  <button class="btn-start" onclick="startGame()">⚡ BẮT ĐẦU CA TRỰC</button>
+</div>
+
+<div class="screen hide" id="game-screen">
+  <div class="hud">
+    <div class="hud-l">
+      <span class="badge-live">● LIVE</span>
+      <span class="hud-title">TÌNH HUỐNG <span id="sn">1</span>/10</span>
+    </div>
+    <div class="hud-r">
+      <div class="dots-row" id="dots"></div>
+      <div class="safe-wrap">
+        <span class="safe-lbl">AN TOÀN</span>
+        <div class="safe-track"><div class="safe-fill" id="sfill" style="width:100%"></div></div>
+        <span class="safe-pct" id="spct">100%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-grid">
+    <div class="grid-left">
+      <div class="scene-svg-wrap" id="svg-wrap">
+        <div class="scene-number-badge" id="snbadge">SCENE 01</div>
+        <div class="scene-shield" id="scene-shield">
+          <div class="shield-icon">☣️</div>
+          <div class="shield-text">DỮ LIỆU ĐANG MÃ HÓA — VUI LÒNG CHỌN ĐÁP ÁN</div>
+        </div>
+      </div>
+      <div class="story" id="story"></div>
+    </div>
+
+    <div class="grid-right">
+      <div>
+        <div class="cw-lbl">// CHỌN HÀNH ĐỘNG HỢP LÝ NHẤT</div>
+        <div class="cg" id="cg"></div>
+      </div>
+      <div class="feedback-box-area">
+        <div class="fb" id="fb">
+          <div class="fb-head" id="fb-head"></div>
+          <div id="fb-desc"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <button class="btn-next hide" id="btn-next" onclick="handleNext()">TIẾP THEO ▶</button>
+  </div>
+</div>
+
+<div class="screen hide" id="end-screen">
+  <div class="end-icon" id="ei">🏆</div>
+  <div class="end-stars" id="estars">⭐⭐⭐⭐⭐</div>
+  <div class="end-t" id="et">CHUYÊN GIA AN TOÀN</div>
+  <div class="end-sc" id="esc">100%</div>
+  <div class="end-sl">CHỈ SỐ AN TOÀN CA TRỰC</div>
+  <div class="end-desc" id="edesc"></div>
+  <button class="btn-re" onclick="location.reload()">🔄 THỰC HIỆN CA TRỰC MỚI</button>
+</div>
+
+</div>
+
+<script>
+function initFloatingIcons() {
+  const container = document.getElementById('lab-particles');
+  const icons = ['🧪', '🧫', '🧬', '🔬', '☣️', '🥼', '🧼', '🧤', '🌡️', '😷'];
+  for (let i = 0; i < 15; i++) {
+    const el = document.createElement('div');
+    el.className = 'lab-icon';
+    el.innerText = icons[Math.floor(Math.random() * icons.length)];
+    el.style.left = Math.random() * 95 + 'vw';
+    el.style.top = Math.random() * 80 + 15 + 'vh';
+    el.style.animationDelay = (Math.random() * -20) + 's';
+    el.style.animationDuration = (15 + Math.random() * 15) + 's';
+    container.appendChild(el);
+  }
+}
+window.addEventListener('DOMContentLoaded', initFloatingIcons);
+
+const scenes = {
+  s0: `<svg viewBox="0 0 700 350" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100%" height="100%" fill="#f8fafc"/>
+    <g transform="translate(180, 160)">
+      <rect x="-110" y="-110" width="220" height="220" rx="20" fill="#fef2f2" stroke="#dc2626" stroke-width="4" filter="drop-shadow(0 4px 10px rgba(0,0,0,0.05))"/>
+      <path d="M-60,30 L-60,70 Q-60,90 -20,90 Q20,90 20,70 L20,30 Z" fill="rgba(220,38,38,0.1)" stroke="#dc2626" stroke-width="3"/>
+      <circle cx="-20" cy="50" r="10" fill="#dc2626" opacity="0.8"/>
+      <circle cx="10" cy="65" r="7" fill="#dc2626" opacity="0.8"/>
+      <circle cx="-10" cy="75" r="8" fill="#dc2626" opacity="0.8"/>
+      <text x="0" y="-40" text-anchor="middle" font-family='Orbitron' font-size="60" fill="#dc2626">✗</text>
+      <text x="0" y="-5" text-anchor="middle" font-family='Be Vietnam Pro' font-size="18" fill="#dc2626" font-weight="bold">DISINFECTION</text>
+      <text x="0" y="135" text-anchor="middle" font-family='Be Vietnam Pro' font-size="15" fill="#ef4444" font-weight="600">Bào tử vi khuẩn vẫn sống sót</text>
+    </g>
+    <g transform="translate(520, 160)">
+      <rect x="-110" y="-110" width="220" height="220" rx="20" fill="#ecfdf5" stroke="#00a86b" stroke-width="4" filter="drop-shadow(0 4px 10px rgba(0,0,0,0.05))"/>
+      <path d="M-60,30 L-60,70 Q-60,90 -20,90 Q20,90 20,70 L20,30 Z" fill="rgba(0,168,107,0.1)" stroke="#00a86b" stroke-width="3"/>
+      <text x="0" y="-30" text-anchor="middle" font-family='Orbitron' font-size="65" fill="#00a86b">✓</text>
+      <text x="0" y="10" text-anchor="middle" font-family='Be Vietnam Pro' font-size="18" fill="#00a86b" font-weight="bold">STERILIZATION</text>
+      <text x="0" y="135" text-anchor="middle" font-family='Be Vietnam Pro' font-size="15" fill="#059669" font-weight="600">Vô trùng hoàn toàn tuyệt đối</text>
+    </g>
+  </svg>`,
+  s1: `<svg viewBox="0 0 700 350" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100%" height="100%" fill="#f8fafc"/>
+    <g transform="translate(350, 160)">
+      <rect x="-180" y="-110" width="360" height="220" rx="24" fill="#fff" stroke="#008fa3" stroke-width="4.5" filter="drop-shadow(0 10px 20px rgba(0,0,0,0.06))"/>
+      <rect x="-140" y="-70" width="180" height="120" rx="10" fill="#e2e8f0" stroke="#64748b" stroke-width="2"/>
+      <text x="-50" y="5" text-anchor="middle" font-family='Orbitron' font-size="46" font-weight="bold" fill="#008fa3">121°C</text>
+      <circle cx="100" cy="-20" r="32" fill="#334155"/>
+      <circle cx="100" cy="-20" r="26" fill="#fff"/>
+      <path d="M100,-20 L115,-35" stroke="#dc2626" stroke-width="4" stroke-linecap="round"/>
+      <text x="100" y="25" text-anchor="middle" font-family='Orbitron' font-size="15" font-weight="bold" fill="#334155">15 PSI</text>
+      <text x="0" y="85" text-anchor="middle" font-family='Orbitron' font-size="20" fill="#b45309" font-weight="bold" letter-spacing="2">⏱ 20-30 PHÚT</text>
+      <text x="0" y="145" text-anchor="middle" font-family='Be Vietnam Pro' font-size="18" fill="#1e293b" font-weight="bold">NỒI HẤP TIỆT TRÙNG AUTOCLAVE</text>
+    </g>
+  </svg>`,
+  s2: `<svg viewBox="0 0 700 350" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100%" height="100%" fill="#f8fafc"/>
+    <g transform="translate(350, 170)">
+      <line x1="-280" y1="70" x2="280" y2="70" stroke="#475569" stroke-width="3"/>
+      <line x1="-250" y1="-100" x2="-250" y2="70" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,4"/>
+      <line x1="250" y1="-100" x2="250" y2="70" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,4"/>
+      <path d="M-250,60 Q-150,50 -50,-60 L0,-70 Q80,-40 160,50 L250,62" stroke="#00a86b" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <circle cx="0" cy="-70" r="10" fill="#ea580c" filter="drop-shadow(0 0 8px #ea580c)"/>
+      <text x="0" y="-95" text-anchor="middle" font-family='Be Vietnam Pro' font-size="16" fill="#ea580c" font-weight="bold">Hiệu quả diệt khuẩn đỉnh cao (70%)</text>
+      <text x="-250" y="98" text-anchor="middle" font-family='Orbitron' font-size="14" fill="#64748b" font-weight="bold">0% Cồn</text>
+      <text x="0" y="98" text-anchor="middle" font-family='Orbitron' font-size="16" fill="#00a86b" font-weight="bold">70% Cồn (Có nước dẫn đường)</text>
+      <text x="240" y="98" text-anchor="middle" font-family='Orbitron' font-size="14" fill="#dc2626" font-weight="bold">95% Cồn (Bị cô lập vách)</text>
+    </g>
+  </svg>`,
+  s3: `<svg viewBox="0 0 700 350" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100%" height="100%" fill="#f8fafc"/>
+    <g transform="translate(350, 160)">
+      <rect x="-260" y="-90" width="520" height="150" rx="16" fill="#fff" stroke="#008fa3" stroke-width="4" filter="drop-shadow(0 6px 15px rgba(0,0,0,0.05))"/>
+      <path d="M-230,-40 L230,-40 M-230,-15 L230,-15 M-230,10 L230,10 M-230,35 L230,35" stroke="rgba(0,143,163,0.25)" stroke-width="3" stroke-dasharray="10,8"/>
+      <circle cx="-120" cy="-15" r="8" fill="#ef4444"/>
+      <path d="M-120,-15 L-110,-25" stroke="#ef4444" stroke-width="2"/>
+      <circle cx="50" cy="10" r="6" fill="#ef4444"/>
+      <text x="0" y="-55" text-anchor="middle" font-family='Orbitron' font-size="20" fill="#008fa3" font-weight="bold" letter-spacing="1">MÀNG LỌC HIỆU NĂNG CAO HEPA</text>
+      <text x="0" y="115" text-anchor="middle" font-family='Be Vietnam Pro' font-size="18" fill="#00a86b" font-weight="bold">Giữ lại 99,97% hạt siêu vi kích thước tới 0.3 µm</text>
+    </g>
+  </svg>`,
+  s4: `<svg viewBox="0 0 700 350" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100%" height="100%" fill="#f8fafc"/>
+    <g transform="translate(350, 150)">
+      <rect x="-140" y="-110" width="280" height="210" rx="12" fill="#fff" stroke="#475569" stroke-width="4" filter="drop-shadow(0 8px 20px rgba(0,0,0,0.06))"/>
+      <rect x="-120" y="-90" width="240" height="120" fill="rgba(0,143,163,0.05)" stroke="#008fa3" stroke-width="2"/>
+      <path d="M-100,-70 L-100,-40 M-60,-70 L-60,-40 M-20,-70 L-20,-40 M20,-70 L20,-40 M60,-70 L60,-40 M100,-70 L100,-40" stroke="#00a86b" stroke-width="3" stroke-linecap="round"/>
+      <text x="0" y="-15" text-anchor="middle" font-family='Orbitron' font-size="14" fill="#00a86b" font-weight="900">AIRFLOW LAMINAR</text>
+      <text x="0" y="135" text-anchor="middle" font-family='Orbitron' font-size="18" fill="#008fa3" font-weight="bold">TỦ AN TOÀN SINH HỌC CẤP II (BSC CLASS II)</text>
+    </g>
+  </svg>`,
+  s5: `<svg viewBox="0 0 700 350" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100%" height="100%" fill="#f8fafc"/>
+    <g transform="translate(350, 150)">
+      <rect x="-240" y="-80" width="480" height="140" rx="16" fill="#fff" stroke="#dc2626" stroke-width="4" filter="drop-shadow(0 8px 16px rgba(220,38,38,0.08))"/>
+      <text x="0" y="-30" text-anchor="middle" font-family='Orbitron' font-size="24" fill="#dc2626" font-weight="900" letter-spacing="2">PRESSURE: NEGATIVE (-)</text>
+      <path d="M-180,15 L-140,15 M-140,15 L-150,5 M-140,15 L-150,25" stroke="#dc2626" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M180,15 L140,15 M140,15 L150,5 M140,15 L150,25" stroke="#dc2626" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="0" y="22" text-anchor="middle" font-family='Be Vietnam Pro' font-size="16" fill="#475569" font-weight="bold">Không khí chỉ hút vào trong, không tràn ra ngoài</text>
+    </g>
+  </svg>`,
+  s6: `<svg viewBox="0 0 700 350" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100%" height="100%" fill="#f8fafc"/>
+    <g transform="translate(350, 160)">
+      <circle r="90" fill="#fff" stroke="#ea580c" stroke-width="4.5" filter="drop-shadow(0 8px 20px rgba(0,0,0,0.06))"/>
+      <circle r="25" fill="#e2e8f0" stroke="#475569" stroke-width="2"/>
+      <line x1="-70" y1="0" x2="-25" y2="0" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/>
+      <line x1="25" y1="0" x2="70" y2="0" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="-55" cy="0" r="10" fill="#ea580c"/>
+      <circle cx="55" cy="0" r="10" fill="#ea580c"/>
+      <text x="0" y="125" text-anchor="middle" font-family='Be Vietnam Pro' font-size="18" fill="#b45309" font-weight="bold">CỐC LY TÂM CÓ NẮP KÍN CHỐNG SOL KHÍ</text>
+    </g>
+  </svg>`,
+  s7: `<svg viewBox="0 0 700 350" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100%" height="100%" fill="#f8fafc"/>
+    <g transform="translate(220, 150)">
+      <rect x="-60" y="-80" width="120" height="160" rx="10" fill="#fef08a" stroke="#ca8a04" stroke-width="4" filter="drop-shadow(0 4px 10px rgba(0,0,0,0.05))"/>
+      <text x="0" y="10" text-anchor="middle" font-size="36">☣️</text>
+      <text x="0" y="115" text-anchor="middle" font-family='Be Vietnam Pro' font-size="16" fill="#854d0e" font-weight="bold">TÚI VÀNG lây nhiễm</text>
+    </g>
+    <g transform="translate(480, 150)">
+      <rect x="-50" y="-70" width="100" height="140" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="4" filter="drop-shadow(0 4px 10px rgba(0,0,0,0.05))"/>
+      <path d="M-20,-20 L20,20 M20,-20 L-20,20" stroke="#dc2626" stroke-width="5" stroke-linecap="round"/>
+      <text x="0" y="115" text-anchor="middle" font-family='Be Vietnam Pro' font-size="16" fill="#991b1b" font-weight="bold">HỘP KHÁNG THỦNG sắc nhọn</text>
+    </g>
+  </svg>`,
+  s8: `<svg viewBox="0 0 700 350" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100%" height="100%" fill="#f8fafc"/>
+    <g transform="translate(350, 150)">
+      <rect x="-240" y="-80" width="480" height="140" rx="14" fill="#fff" stroke="#dc2626" stroke-width="4" filter="drop-shadow(0 6px 15px rgba(0,0,0,0.05))"/>
+      <path d="M-200,30 L200,30" stroke="#cbd5e1" stroke-width="8" stroke-linecap="round"/>
+      <rect x="-100" y="-20" width="200" height="36" rx="6" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2"/>
+      <text x="0" y="4" text-anchor="middle" font-family='Be Vietnam Pro' font-size="14" fill="#64748b" font-weight="bold">KHĂN GIẤY THẤM HÓA CHẤT</text>
+      <text x="0" y="95" text-anchor="middle" font-family='Be Vietnam Pro' font-size="18" fill="#dc2626" font-weight="bold">ĐỔ KHỬ TRÙNG CLORAMIN B TỪ RÌA VÀO TRONG</text>
+    </g>
+  </svg>`,
+  s9: `<svg viewBox="0 0 700 350" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100%" height="100%" fill="#f8fafc"/>
+    <g transform="translate(350, 160)">
+      <rect x="-260" y="-100" width="520" height="170" rx="16" fill="#fff" stroke="#00a86b" stroke-width="4" filter="drop-shadow(0 8px 25px rgba(0,0,0,0.05))"/>
+      <text x="0" y="-55" text-anchor="middle" font-family='Orbitron' font-size="22" fill="#00a86b" font-weight="900" letter-spacing="1">TRANG BỊ PPE CHUẨN CAO BSL-3</text>
+      <text x="-140" y="5" text-anchor="middle" font-family='Be Vietnam Pro' font-size="16" fill="#334155" font-weight="bold">🥼 Áo choàng kín sau</text>
+      <text x="140" y="5" text-anchor="middle" font-family='Be Vietnam Pro' font-size="16" fill="#334155" font-weight="bold">😷 Khẩu trang N95 / PAPR</text>
+      <text x="0" y="45" text-anchor="middle" font-family='Be Vietnam Pro' font-size="16" fill="#334155" font-weight="bold">🧤 Đeo 2 lớp găng tay bảo hộ</text>
+    </g>
+  </svg>`
+};
+
+const questions = [
+  {
+    story: "Trong cuộc họp chuyên môn, một kỹ thuật viên nói: 'Khử trùng (Disinfection) và Tiệt trùng (Sterilization) bản chất là giống nhau, đều làm sạch vi khuẩn'. Là chuyên gia, bạn đính chính thế nào?",
+    choices: [
+      "Đúng vậy, cả hai phương pháp đều tiêu diệt hoàn toàn mọi vi sinh vật bao gồm cả bào tử vi khuẩn.",
+      "Khử trùng chỉ tiêu diệt hầu hết vi sinh vật gây bệnh nhưng không diệt được bào tử; còn Tiệt trùng mới tiêu diệt toàn bộ vi sinh vật kể cả bào tử vi khuẩn.",
+      "Khử trùng mạnh hơn tiệt trùng vì sử dụng hóa chất đậm đặc công nghiệp."
+    ],
+    answer: 1,
+    ok: "Chính xác! Khử trùng (Disinfection) không thể diệt được bào tử vi khuẩn có tính kháng cao. Tiệt trùng (Sterilization) là mức độ tuyệt đối cao nhất.",
+    ng: "Sai rồi. Khử trùng không thể diệt được dạng bào tử (endospores). Chỉ có tiệt trùng mới đạt mức độ vô trùng tuyệt đối."
+  },
+  {
+    story: "Bạn cần tiệt trùng một lô dụng cụ thủy tinh và môi trường nuôi cấy bằng nồi hấp vô trùng (Autoclave). Thông số chuẩn tối thiểu nào bắt buộc phải thiết lập?",
+    choices: [
+      "Hấp ở 100°C trong vòng 10 phút ở áp suất khí quyển thông thường.",
+      "Hấp ở 121°C, áp suất 15 PSI trong thời gian từ 20 đến 30 phút.",
+      "Sấy khô ở nhiệt độ 160°C liên tục trong vòng 5 phút."
+    ],
+    answer: 1,
+    ok: "Xuất sắc! Đây là thông số chuẩn vàng quốc tế để hơi nước bão hòa dưới áp suất cao phá hủy cấu trúc protein của mọi thực thể sinh học.",
+    ng: "Sai thông số nghiêm trọng! Ở 100°C bào tử vi khuẩn không chết. Thông số chuẩn bắt buộc phải là 121°C dưới áp suất 15 PSI trong ít nhất 20-30 phút."
+  },
+  {
+    story: "Để sát trùng bề mặt bàn làm việc dính tác nhân sinh học, phòng thí nghiệm có sẵn hai loại dung dịch cồn: Cồn 70% và Cồn 95%. Bạn sẽ chọn loại nào?",
+    choices: [
+      "Cồn 95% vì nồng độ cao hơn sẽ đốt cháy và tiêu diệt vi khuẩn nhanh gấp đôi.",
+      "Trộn hai loại cồn lại với nhau để tối ưu hóa hiệu quả sát khuẩn diện rộng.",
+      "Cồn 70% vì lượng nước phù hợp giúp cồn thẩm thấu qua vách tế bào để diệt khuẩn; cồn 95% làm đông vách quá nhanh khiến cồn không lọt vào trong được."
+    ],
+    answer: 2,
+    ok: "Hoàn hảo! Cồn 95% làm đông tụ protein vỏ vi khuẩn quá nhanh tạo ra lớp màng bọc bảo vệ chính nó. Cồn 70% có nước dẫn đường diệt khuẩn cực tốt.",
+    ng: "Sai lầm phổ biến! Không phải cứ nồng độ cao là tốt hơn. Cồn 95% làm đông vách tế bào lập tức, vô tình che chở lõi vi khuẩn bên trong. Phải chọn cồn 70%."
+  },
+  {
+    story: "Hệ thống thông khí của tủ an toàn sinh học và phòng BSL-3 giữ vai trò sống còn. Loại màng lọc nào có khả năng giữ lại các hạt sol khí chứa virus hiệu quả nhất?",
+    choices: [
+      "Màng lọc than hoạt tính thông thường chuyên hút mùi.",
+      "Màng lọc HEPA có khả năng giữ lại tối thiểu 99,97% các hạt có kích thước từ 0,3 µm.",
+      "Màng lọc lưới sợi thủy tinh thô chuyên lọc bụi mịn bụi phòng."
+    ],
+    answer: 1,
+    ok: "Hoàn toàn chính xác! Màng lọc HEPA là tấm lá chắn giữ lại các giọt bắn và sol khí mang mầm bệnh nguy hiểm lây nhiễm qua đường hô hấp.",
+    ng: "Chưa chính xác. Màng lọc than hoạt tính chỉ khử mùi và khí độc. Đối với tác nhân sinh học siêu nhỏ, bắt buộc phải dùng màng lọc hiệu năng cao HEPA."
+  },
+  {
+    story: "Bạn chuẩn bị tiến hành thao tác nuôi cấy vi khuẩn lao (Mycobacterium tuberculosis). Bạn phải thực hiện thao tác này ở đâu để đảm bảo an toàn?",
+    choices: [
+      "Ngay tại bàn làm việc mở của phòng thí nghiệm miễn là có bật đèn UV trước đó.",
+      "Bên trong Tủ an toàn sinh học Cấp II (BSC Class II) đặt trong phòng áp suất âm.",
+      "Bên trong tủ hút khí độc hóa học thông thường có kính che phía trước."
+    ],
+    answer: 1,
+    ok: "Chuẩn không cần chỉnh! Tủ BSC cấp II bảo vệ cả người thao tác, mẫu vật và môi trường nhờ luồng khí laminar và màng lọc HEPA.",
+    ng: "Cực kỳ nguy hiểm! Vi khuẩn lao lây qua đường sol khí. Thao tác ngoài bàn hoặc trong tủ hút hóa học sẽ gây phát tán mầm bệnh."
+  },
+  {
+    story: "Nguyên lý di chuyển của dòng khí giữa bên trong phòng thí nghiệm BSL-3 và khu vực hành lang sạch bên ngoài được thiết kế theo quy tắc nào?",
+    choices: [
+      "Áp suất dương: Khí từ phòng thí nghiệm liên tục thổi mạnh ra ngoài hành lang.",
+      "Cân bằng tuyệt đối: Áp suất hai bên bằng nhau để khí không dịch chuyển.",
+      "Áp suất âm: Không khí luôn chuyển dịch một chiều từ khu vực sạch bên ngoài đi vào phòng thí nghiệm."
+    ],
+    answer: 2,
+    ok: "Tuyệt vời! Áp suất âm đảm bảo nếu có bất kỳ khe hở hay sự cố mở cửa nào xảy ra, mầm bệnh cũng bị giữ lại bên trong phòng, không thể thoát ra hành lang.",
+    ng: "Sai lầm chết người! Nếu để áp suất dương, mầm bệnh nguy hiểm từ phòng thí nghiệm sẽ bị thổi bay thẳng ra hành lang lây nhiễm cho toàn bộ tòa nhà."
+  },
+  {
+    story: "Bạn chuẩn bị ly tâm các ống nghiệm chứa dịch huyền phục có nồng độ virus cao. Hành động nào sau đây tuân thủ nghiêm ngặt quy trình an toàn?",
+    choices: [
+      "Đặt ống nghiệm vào rotor, đóng nắp máy ly tâm và bấm chạy tốc độ cao nhất.",
+      "Sử dụng các ống nghiệm có nắp vặn kín, đặt vào cốc ly tâm an toàn chuyên dụng có nắp gioăng cao su kín và chỉ mở nắp cốc này bên trong tủ BSC sau khi ly tâm xong.",
+      "Mở nắp máy ly tâm ngay khi vừa bấm dừng để kiểm tra xem có hiện tượng nứt vỡ ống nghiệm không."
+    ],
+    answer: 1,
+    ok: "Quyết định rất chuyên nghiệp! Quá trình ly tâm tạo ra lực lớn dễ phát tán sol khí vô hình. Việc mở cốc an toàn trong tủ BSC ngăn chặn sol khí bay vào mặt.",
+    ng: "Vi phạm an toàn nghiêm trọng! Máy ly tâm tạo sol khí cực mạnh. Nếu không dùng cốc kín bảo mật hoặc mở nắp ngay lập tức, bạn sẽ hít phải lượng lớn sol khí virus."
+  },
+  {
+    story: "Sau ca làm việc, bạn có một số ống nghiệm nhựa dùng một lần và đầu tip pipette dính máu nhiễm khuẩn. Bạn phải phân loại và xử lý chúng như thế nào?",
+    choices: [
+      "Bỏ tất cả vào thùng rác sinh hoạt màu xanh thông thường để công nhân vệ sinh mang đi đổ.",
+      "Thu gom vào túi hoặc thùng màu vàng có biểu trưng nguy hại sinh học để hấp tiệt trùng trước, sau đó cho vật sắc nhọn vào hộp kháng thủng.",
+      "Đổ trực tiếp nước javen vào rồi vứt bỏ ra bồn rửa tay."
+    ],
+    answer: 1,
+    ok: "Chính xác! Rác thải nguy hại sinh học phải gom vào túi vàng, vật sắc nhọn vào hộp cứng kháng thủng và bắt buộc phải hấp vô trùng trước khi tiêu hủy.",
+    ng: "Không thể chấp nhận! Vứt rác lây nhiễm vào thùng sinh hoạt hoặc xả thẳng ra bồn rửa sẽ làm ô nhiễm nghiêm trọng nguồn nước và lây lan dịch bệnh ra cộng đồng."
+  },
+  {
+    story: "Một ống nghiệm chứa dịch nuôi cấy vi khuẩn nguy hại bất ngờ rơi xuống sàn nhà vỡ tan, dịch lây nhiễm bắn tung tóe. Quy trình xử lý sự cố đổ tràn của bạn là gì?",
+    choices: [
+      "Lấy chổi quét sạch các mảnh kính rồi dùng giẻ lau khô sàn nhà thật nhanh.",
+      "Thông báo mọi người lánh nạn, đợi sol khí lắng xuống; sau đó phủ khăn giấy lên vùng đổ tràn, đổ dung dịch Cloramin B 0.5% từ rìa vào trong, chờ 20-30 phút mới thu gom.",
+      "Xịt cồn 95% trực tiếp vào vết đổ tràn rồi dùng bật lửa đốt khử trùng tại chỗ."
+    ],
+    answer: 1,
+    ok: "Quá xuất sắc! Quy trình xử lý sự cố đổ tràn chuẩn mực: hạn chế phát tán sol khí, cô lập từ rìa và dành đủ thời gian tiếp xúc cho hóa chất khử trùng.",
+    ng: "Quá nguy hiểm! Quét chổi làm phát tán sol khí. Bạn phải cô lập bằng khăn giấy và sát khuẩn bằng Cloramin B đúng thời gian."
+  },
+  {
+    story: "Trước khi bước qua cửa để vào phòng lab cấp độ BSL-3 thực hiện ca trực, bạn cần mặc các trang thiết bị bảo hộ cá nhân (PPE) tối thiểu nào?",
+    choices: [
+      "Áo blouse trắng thông thường, đeo khẩu trang y tế 3 lớp và mang dép đi trong nhà.",
+      "Quần áo bảo hộ chuyên dụng kín người, áo choàng mở sau, khẩu trang hiệu năng cao N95 hoặc hệ thống trợ thở PAPR, kính bảo hộ và đi hai lớp găng tay.",
+      "Chỉ cần đeo găng tay cao su là đủ bảo vệ."
+    ],
+    answer: 1,
+    ok: "Chuyên gia an toàn sinh học đích thực! Phòng BSL-3 chứa các tác nhân nhóm 3 lây nhiễm nguy hiểm qua đường hô hấp, bảo hộ nghiêm ngặt là lá chắn sống còn.",
+    ng: "Thiếu kiến thức an toàn trầm trọng! Khẩu trang y tế và áo blouse thông thường chỉ dùng cho phòng BSL-1. Với BSL-3, bắt buộc phải dùng N95/PAPR và đồ bảo hộ kín."
+  }
+];
+
+let currentIdx = 0, score = 100, wrongCount = 0;
+
+function startGame() {
+  document.getElementById('start-screen').classList.add('hide');
+  document.getElementById('game-screen').classList.remove('hide');
+  initDots();
+  showQuestion();
+}
+
+function initDots() {
+  const row = document.getElementById('dots');
+  row.innerHTML = '';
+  for (let i = 0; i < questions.length; i++) {
+    const d = document.createElement('div');
+    d.className = 'd' + (i === 0 ? ' now' : '');
+    row.appendChild(d);
+  }
+}
+
+function showQuestion() {
+  document.getElementById('scene-shield').classList.remove('reveal');
+  document.getElementById('sn').innerText = currentIdx + 1;
+  document.getElementById('snbadge').innerText = `SCENE 0${currentIdx + 1}`;
+  
+  const wrap = document.getElementById('svg-wrap');
+  const oldBadge = document.getElementById('snbadge');
+  const oldShield = document.getElementById('scene-shield');
+  
+  wrap.innerHTML = '';
+  wrap.appendChild(oldBadge);
+  wrap.appendChild(oldShield);
+  
+  const temp = document.createElement('div');
+  temp.innerHTML = scenes['s' + currentIdx] || `<svg viewBox="0 0 700 350" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#f8fafc"/><text x="350" y="175" text-anchor="middle" fill="#64748b" font-size="16">MÔ PHỎNG BSL-3</text></svg>`;
+  wrap.appendChild(temp.firstChild);
+
+  document.getElementById('story').innerText = questions[currentIdx].story;
+
+  const cg = document.getElementById('cg');
+  cg.innerHTML = '';
+  
+  const labels = ['A', 'B', 'C'];
+  questions[currentIdx].choices.forEach((txt, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'bc';
+    btn.onclick = () => selectChoice(idx);
+    btn.innerHTML = `<span class="cl">${labels[idx]}</span><span style="flex:1;">${txt}</span>`;
+    cg.appendChild(btn);
+  });
+
+  const fb = document.getElementById('fb');
+  fb.className = 'fb';
+  document.getElementById('btn-next').classList.add('hide');
+  
+  const dots = document.getElementById('dots').children;
+  for(let i=0; i<dots.length; i++) {
+    if(i === currentIdx) dots[i].className = 'd now';
+  }
+}
+
+function selectChoice(chosenIdx) {
+  const q = questions[currentIdx];
+  const buttons = document.getElementById('cg').children;
+  
+  document.getElementById('scene-shield').classList.add('reveal');
+
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].disabled = true;
+  }
+
+  const isCorrect = (chosenIdx === q.answer);
+  const fb = document.getElementById('fb');
+  const h = document.getElementById('fb-head');
+  const d = document.getElementById('fb-desc');
+  const flash = document.getElementById('fl');
+  const screenNode = document.getElementById('game-screen');
+  const dots = document.getElementById('dots').children;
+
+  if (isCorrect) {
+    buttons[chosenIdx].classList.add('ok');
+    fb.className = 'fb fb-ok show';
+    h.innerText = '✓ LỆNH AN TOÀN ĐƯỢC THIẾT LẬP';
+    d.innerText = q.ok;
+    dots[currentIdx].className = 'd done';
+    
+    // Bùng nổ chớp sáng xanh toàn màn hình
+    flash.className = 'flash g-wow';
+    setTimeout(() => flash.className = 'flash', 500);
+    // Bắn pháo hoa ăn mừng câu trả lời đúng
+    spawnConfetti();
+  } else {
+    buttons[chosenIdx].classList.add('ng');
+    // Tự động làm sáng đáp án đúng lên để người chơi nhìn rõ
+    buttons[q.answer].classList.add('ok');
+    
+    fb.className = 'fb fb-ng show';
+    h.innerText = '🚨 VI PHẠM QUY TRÌNH AN TOÀN SINH HỌC';
+    d.innerText = q.ng;
+    dots[currentIdx].className = 'd wrong';
+    
+    wrongCount++;
+    score = Math.max(0, score - 15);
+    updateScoreUI();
+
+    // Rung lắc toàn màn hình game tạo hiệu ứng giật mình cực tốt
+    screenNode.classList.add('shake-wow');
+    setTimeout(() => screenNode.classList.remove('shake-wow'), 500);
+    
+    // Bùng nổ chớp sáng đỏ cảnh báo vi phạm nguy hiểm
+    flash.className = 'flash r-wow';
+    setTimeout(() => flash.className = 'flash', 500);
+  }
+
+  document.getElementById('btn-next').classList.remove('hide');
+}
+
+function updateScoreUI() {
+  const fill = document.getElementById('sfill');
+  const pct = document.getElementById('spct');
+  fill.style.width = score + '%';
+  pct.innerText = score + '%';
+  if (score >= 70) {
+    pct.style.color = 'var(--green)';
+    fill.style.background = 'linear-gradient(90deg, var(--green), #00c781)';
+  } else if (score >= 40) {
+    pct.style.color = '#d97706'; 
+    fill.style.background = '#d97706';
+  } else {
+    pct.style.color = 'var(--red)';
+    fill.style.background = 'var(--red)';
+  }
+}
+
+function handleNext() {
+  currentIdx++;
+  if (currentIdx < questions.length) {
+    showQuestion();
+  } else {
+    showEndScreen();
+  }
+}
+
+function showEndScreen() {
+  document.getElementById('game-screen').classList.add('hide');
+  document.getElementById('end-screen').classList.remove('hide');
+  const ei = document.getElementById('ei'),
+        et = document.getElementById('et'),
+        esc = document.getElementById('esc'),
+        ed = document.getElementById('edesc'),
+        esta = document.getElementById('estars');
+  esc.innerHTML = score + '<span style="font-size:.4em">%</span>';
+
+  if (score === 100) {
+    ei.textContent = '🏆'; et.style.color = 'var(--green)'; et.textContent = 'CHUYÊN GIA AN TOÀN XUẤT SẮC';
+    esta.textContent = '⭐⭐⭐⭐⭐';
+    ed.textContent = 'Tuyệt đối hoàn hảo! Bạn đã hoàn thành xuất sắc ca trực mà không để xảy ra bất kỳ một sai sót nào. Phòng thí nghiệm và cộng đồng được bảo vệ an toàn nghiêm ngặt!';
+    setTimeout(spawnConfetti, 200); setTimeout(spawnConfetti, 800);
+  } else if (score >= 70) {
+    ei.textContent = '👍'; et.style.color = 'var(--cyan)'; et.textContent = 'HOÀN THÀNH CA TRỰC ĐẠT CHUẨN';
+    esta.textContent = '⭐⭐⭐⭐';
+    ed.textContent = `Chỉ số an toàn đạt ${score}%. Bạn vượt qua ca làm việc thành công, tuy nhiên vẫn còn một vài lỗi nhỏ cần rút kinh nghiệm nghiêm túc.`;
+    spawnConfetti();
+  } else if (score >= 40) {
+    ei.textContent = '⚠️'; et.style.color = '#d97706'; et.textContent = 'CẦN ĐÀO TẠO LẠI';
+    esta.textContent = '⭐⭐⭐';
+    ed.textContent = `Chỉ số an toàn tụt xuống còn ${score}%. Nhiều quy định phòng dịch nguy hại bị vi phạm. Bạn cần ôn tập lại quy trình!`;
+  } else {
+    ei.textContent = '🚨'; et.style.color = 'var(--red)'; et.textContent = 'THẢM HỌA LÂY NHIỄM SINH HỌC';
+    esta.textContent = '⭐';
+    ed.textContent = `Chỉ số an toàn báo động đỏ nguy hiểm: ${score}%. Phòng thí nghiệm bị phong tỏa khẩn cấp!`;
+  }
+}
+
+function spawnConfetti() {
+  const colors = ['#008fa3', '#10b981', '#ca8a04', '#ef4444', '#334155'];
+  for (let i = 0; i < 70; i++) {
+    const p = document.createElement('div');
+    p.className = 'cp';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.top = '-20px';
+    p.style.width = (6 + Math.random() * 8) + 'px';
+    p.style.height = (9 + Math.random() * 12) + 'px';
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.animationDuration = (1.5 + Math.random() * 2.0) + 's';
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 2500);
+  }
+}
+
+const canvas = document.getElementById('bgc');
+const ctx = canvas.getContext('2d');
+let w, h;
+function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+window.addEventListener('resize', resize); resize();
+const lines = Array(30).fill(0).map(() => ({
+  x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight,
+  v: 0.4 + Math.random() * 0.8, len: 40 + Math.random() * 90
+}));
+function draw() {
+  ctx.clearRect(0,0,w,h);
+  ctx.strokeStyle = 'rgba(0, 143, 163, 0.04)';
+  ctx.lineWidth = 1.5;
+  lines.forEach(l => {
+    ctx.beginPath(); ctx.moveTo(l.x, l.y); ctx.lineTo(l.x, l.y + l.len); ctx.stroke();
+    l.y += l.v; if(l.y > h) { l.y = -l.len; l.x = Math.random() * w; }
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>
